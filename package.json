@@ -2,7 +2,10 @@
   "name": "cnabBuilder",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/gadielkalleb/cnabBuilder.git",
+  "bin": {
+    "cnab-builder": "cnabRows.js"
+  },
+  "repository": "https://github.com/gabrielrufino/cnabBuilder.git",
   "license": "MIT",
   "type": "module",
   "dependencies": {
