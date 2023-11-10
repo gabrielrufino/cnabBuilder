@@ -46,3 +46,26 @@ desafio consiste:
 * **Bonus**, ler o cnab e escrever um novo arquivo em formato JSON, contendo nome e endereço da empresa.
 
 O candidato tem total liberdade de mudar a estrutura atual desse projeto, a ideía é ver a criatividade de resolver esse problema.
+
+## Installing
+
+```sh
+git clone https://github.com/gabrielrufino/cnabBuilder
+cd cnabBuilder
+yarn
+npm link
+```
+
+## Usage
+
+### Custom file
+
+```sh
+cnab-builder -f 21 -t 34 -s p --file /path/to/file.rem
+```
+
+### Search company
+
+```sh
+cnab-builder -f 21 -t 34 -s p --search "REDECARD SA"
+```
