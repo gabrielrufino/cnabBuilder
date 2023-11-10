@@ -14,6 +14,7 @@ const optionsYargs = yargs(process.argv.slice(2))
   .option("t", { alias: "to", describe: "posição final de pesquisa da linha do Cnab", type: "number", demandOption: true })
   .option("s", { alias: "segmento", describe: "tipo de segmento", type: "string", demandOption: true })
   .option('file', { describe: "caminho para o arquivo", type: "string" })
+  .option('search', { describe: "busca pela empresa", type: "string" })
   .example('$0 -f 21 -t 34 -s p', 'lista a linha e campo que from e to do cnab')
   .argv;
 
@@ -24,7 +25,8 @@ const {
   from,
   to,
   segmento,
-  file = path.resolve(`${__dirname}/cnabExample.rem`)
+  file = path.resolve(`${__dirname}/cnabExample.rem`),
+  search
 } = optionsYargs
 
 const sliceArrayPosition = (arr, ...positions) => [...arr].slice(...positions)
@@ -38,7 +40,7 @@ posição to: ${chalk.inverse.bgBlack(to)}
 
 item isolado: ${chalk.inverse.bgBlack(segmento.substring(from - 1, to))}
 
-item dentro da linha P: 
+item dentro da linha ${segmentoType}: 
   ${segmento.substring(0, from)}${chalk.inverse.bgBlack(segmento.substring(from - 1, to))}${segmento.substring(to)}
 
 ----- FIM ------
@@ -53,6 +55,20 @@ readFile(file, 'utf8')
     const cnabArray = file.split('\n')
 
     const cnabHeader = sliceArrayPosition(cnabArray, 0, 2)
+
+    if (search) {
+      const row = cnabArray.find(row => row.includes(search))
+            
+      if (row) {
+        const segment = row.split('').find(letter => ['P', 'Q', 'R'].includes(letter))
+        const initial = row.search(search)
+        const final = initial + search.length
+
+        log(messageLog(row, segment, initial, final))
+      }
+
+      return
+    }
 
     const [cnabBodySegmentoP, cnabBodySegmentoQ, cnabBodySegmentoR] = sliceArrayPosition(cnabArray, 2, -2)
 
